@@ -1,0 +1,19 @@
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+platformio.ini
+
+# VSCode
+.vscode/
+
+# Python (PIO uses Python internally)
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
