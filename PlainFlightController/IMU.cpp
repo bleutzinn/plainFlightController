@@ -32,7 +32,7 @@ IMU::begin()
 {
   if (mpu6050.initialise() == false)
   {
-    Serial.println("Failed to initialise MPU6050. Check your wiring.");
+    Serial.println("Failed to initialise MPU6050! Check your wiring.");
     m_imu.fault = true;
   }
   else
