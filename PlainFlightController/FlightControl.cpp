@@ -24,6 +24,31 @@
 #include "FlightControl.hpp"
 
 
+/**
+ * @brief  
+ * Waits for serial monitor to connect before starting the flight control process.
+ * This is to ensure we do not miss any important console data during startup.
+ */
+void
+waitForSerial()
+{
+#ifdef WAIT_FOR_MONITOR
+  #if WAIT_FOR_MONITOR > 0
+    #if defined(ARDUINO_CDC_ON_BOOT) && ARDUINO_USB_CDC_ON_BOOT
+      // If the board has native USB and it is configured to be active on boot, we can check if it is connected
+      uint32_t startTime = millis();
+      while (!Serial && ((millis() - startTime) < WAIT_FOR_MONITOR))
+      {
+        delay(10);
+      }
+      if (Serial) delay(WAIT_FOR_MONITOR);
+    #else
+      // For boards without native USB or where it is not active on boot, we can just delay for the specified time
+      delay(WAIT_FOR_MONITOR);
+    #endif
+  #endif
+#endif
+}
 
 /**
 * @brief  Starts the flight control process  
@@ -34,12 +59,9 @@ FlightControl::begin()
   modelConfig();
 
   Serial.begin(Config::USB_BAUD);
-  if (Serial)
-  {
-    delay(3000);  //Need to wait by this magic number or some console data will be lost while PC is connecting.
-    Serial.print("PlainFlightController: ");
-    Serial.println(Config::SOFTWARE_VERSION);
-  }
+  waitForSerial();
+  Serial.print("PlainFlightController: ");
+  Serial.println(Config::SOFTWARE_VERSION);
 
   imu.begin();
   imu.setMadgwickWeighting(IMU::MADGWICK_WARM_UP_WEIGHTING);
