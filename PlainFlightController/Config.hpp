@@ -71,7 +71,7 @@ class Config
     static constexpr bool USE_LOW_VOLTS_CUT_OFF               = false;  //Set to true to actively limit throttle upon low battery voltage
     static constexpr bool USE_250_DEGS_SECOND                 = true;   //Set to false for 250 degs/s
     static constexpr bool USE_500_DEGS_SECOND                 = false;  //Set to false for 500 degs/s
-    static constexpr bool USE_ACRO_TRAINER                    = false;  //When pitch & roll sticks centred levelled mode, else rate mode.
+    static constexpr bool USE_ACRO_TRAINER                    = true;  //When pitch & roll sticks centred levelled mode, else rate mode.
     static constexpr bool REVERSE_PITCH_CORRECTIONS           = false;  //Set REVERSE_x_CORRECTIONS to true to reverse gyro/levelling corrections
     static constexpr bool REVERSE_ROLL_CORRECTIONS            = false;
     static constexpr bool REVERSE_YAW_CORRECTIONS             = false;
