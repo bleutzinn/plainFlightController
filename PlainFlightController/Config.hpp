@@ -124,8 +124,8 @@ class Config
     static constexpr bool BUILD_IN_LED_ON                     = false;
     static constexpr bool BUILD_IN_LED_OFF                    = true;
 
-    static constexpr uint32_t LED_ON_DURATION_MS              = 200; //Duration of LED flash in milliseconds
-    static constexpr uint32_t LED_OFF_DURATION_MS             = 1000; //Duration of LED flash in milliseconds
+    static constexpr uint32_t LED_ON_DURATION_MS              = 200;  //Duration of LED is ON (flash) in milliseconds
+    static constexpr uint32_t LED_OFF_DURATION_MS             = 1000; //Duration of LED is OFF in milliseconds
   
     //USB serial
     static constexpr uint32_t USB_BAUD                        = 500000U;
