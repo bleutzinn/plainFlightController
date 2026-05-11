@@ -25,6 +25,7 @@
 #include <inttypes.h>
 #include <Arduino.h>
 #include "Timer.hpp"
+#include "Config.hpp"
 
 
 
@@ -60,45 +61,45 @@ class LedSequences
       const uint32_t size;
     };    
 
-    static constexpr LedState PASS_THROUGH[2]       = {{125U, RED, true},{1000U, NO_COLOUR, false}};  //PassThrough - 1 quick flash
-    static constexpr LedState RATE[4]               = {{125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{1000U, NO_COLOUR, false}};   //Rate - 2 quick flashes 
-    static constexpr LedState SELF_LEVELLED[6]      = {{125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{1000U, NO_COLOUR, false}};   //Self Levelled - 3 quick flashes  
-    static constexpr LedState ACRO_TRAINER[8]       = {{125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{1000U, NO_COLOUR, false}};   //Acro trainer - 4 quick flashes
-    static constexpr LedState WAIT_DISARM[10]       = {{125U, BLUE, true},{125U, NO_COLOUR, false},
-                                                      {125U, BLUE, true},{125U, NO_COLOUR, false},
-                                                      {125U, BLUE, true},{125U, NO_COLOUR, false},
-                                                      {125U, BLUE, true},{125U, NO_COLOUR, false},
-                                                      {125U, BLUE, true},{1000U, NO_COLOUR, false}};   //Wait To Disarm - 5 quick flashes    
-    static constexpr LedState WIFI_AP[12]           = {{125U, YELLOW, true},{125U, NO_COLOUR, false},
-                                                      {125U, YELLOW, true},{125U, NO_COLOUR, false},
-                                                      {125U, YELLOW, true},{125U, NO_COLOUR, false},
-                                                      {125U, YELLOW, true},{125U, NO_COLOUR, false},
-                                                      {125U, YELLOW, true},{125U, NO_COLOUR, false},
-                                                      {125U, YELLOW, true},{1000U, NO_COLOUR, false}};   //Wifi AP - 6 quick flashes
-    static constexpr LedState FAULT[14]             = {{125U, PURPLE, true},{125U, NO_COLOUR, false},
-                                                      {125U, PURPLE, true},{125U, NO_COLOUR, false},
-                                                      {125U, PURPLE, true},{125U, NO_COLOUR, false},
-                                                      {125U, PURPLE, true},{125U, NO_COLOUR, false},
-                                                      {125U, PURPLE, true},{125U, NO_COLOUR, false},
-                                                      {125U, PURPLE, true},{125U, NO_COLOUR, false},
-                                                      {125U, PURPLE, true},{1000U, NO_COLOUR, false}};   //Fault - 7 quick flashes
-    static constexpr LedState PROP_HANG[16]         = {{125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{125U, NO_COLOUR, false},
-                                                      {125U, RED, true},{1000U, NO_COLOUR, false}};     //Prop hang - 8 quick flashes
-    static constexpr LedState DISARMED[2]           = {{1500U, GREEN, true}, {1500, NO_COLOUR, false}}; //Disarmed - 1.5 second flash for disarmed
-    static constexpr LedState CALIBRATION[2]        = {{250U, WHITE, true}, {250, NO_COLOUR, false}};   //Calibrating - 250ms second flash 
-    static constexpr LedState FAILSAFE[2]           = {{125U, PURPLE, true},{125U, NO_COLOUR, false}};  //Failsafe constant quick flashing  
+    static constexpr LedState PASS_THROUGH[2]       = {{Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_OFF_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF}};  //PassThrough - 1 quick flash
+    static constexpr LedState RATE[4]               = {{Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_OFF_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF}};   //Rate - 2 quick flashes 
+    static constexpr LedState SELF_LEVELLED[6]      = {{Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_OFF_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF}};   //Self Levelled - 3 quick flashes  
+    static constexpr LedState ACRO_TRAINER[8]       = {{Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_OFF_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF}};   //Acro trainer - 4 quick flashes
+    static constexpr LedState WAIT_DISARM[10]       = {{Config::LED_ON_DURATION_MS, BLUE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, BLUE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, BLUE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, BLUE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, BLUE, Config::BUILD_IN_LED_ON},{Config::LED_OFF_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF}};   //Wait To Disarm - 5 quick flashes    
+    static constexpr LedState WIFI_AP[12]           = {{Config::LED_ON_DURATION_MS, YELLOW, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, YELLOW, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, YELLOW, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, YELLOW, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, YELLOW, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, YELLOW, Config::BUILD_IN_LED_ON},{Config::LED_OFF_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF}};   //Wifi AP - 6 quick flashes
+    static constexpr LedState FAULT[14]             = {{Config::LED_ON_DURATION_MS, PURPLE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, PURPLE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, PURPLE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, PURPLE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, PURPLE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, PURPLE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, PURPLE, Config::BUILD_IN_LED_ON},{Config::LED_OFF_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF}};   //Fault - 7 quick flashes
+    static constexpr LedState PROP_HANG[16]         = {{Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF},
+                                                      {Config::LED_ON_DURATION_MS, RED, Config::BUILD_IN_LED_ON},{Config::LED_OFF_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF}};     //Prop hang - 8 quick flashes
+    static constexpr LedState DISARMED[2]           = {{1500U, GREEN, Config::BUILD_IN_LED_ON}, {1500, NO_COLOUR, Config::BUILD_IN_LED_OFF}}; //Disarmed - 1.5 second flash for disarmed
+    static constexpr LedState CALIBRATION[2]        = {{250U, WHITE, Config::BUILD_IN_LED_ON}, {250, NO_COLOUR, Config::BUILD_IN_LED_OFF}};   //Calibrating - 250ms second flash 
+    static constexpr LedState FAILSAFE[2]           = {{Config::LED_ON_DURATION_MS, PURPLE, Config::BUILD_IN_LED_ON},{Config::LED_ON_DURATION_MS, NO_COLOUR, Config::BUILD_IN_LED_OFF}};  //Failsafe constant quick flashing  
 
     
 
@@ -172,7 +173,7 @@ class Led : public LedSequences
         setLed();
         sequenceTimer.set(sequences[m_playSequence].led[m_idx].duration);
         m_idx = (++m_idx >= sequences[m_playSequence].size) ? 0U: m_idx;
-        m_sequenceFinished = (0U == m_idx) ? true:false;
+        m_sequenceFinished = (0U == m_idx) ? Config::BUILD_IN_LED_ON:Config::BUILD_IN_LED_OFF;
       }
     }
 
