@@ -25,29 +25,28 @@
 
 
 /**
- * @brief  
- * Waits for serial monitor to connect before starting the flight control process.
- * This is to ensure we do not miss any important console data during startup.
+ * @brief  Waits for serial monitor to connect before starting the flight control process.
+ * @note   This is to ensure we do not miss any important console data during startup.
+ * @note   Requires a compiler flag in platformio.ini: -DWAIT_FOR_MONITOR=2000 (time in ms to wait for monitor connection, set to 0 to disable)
+ * @note   Requires a board which has native USB (XIAO) and it is configured to be active on boot.
+ * @note   If one of these requirements is not met no extra delay will be applied.
  */
 void
 waitForSerial()
 {
-#ifdef WAIT_FOR_MONITOR
-  #if WAIT_FOR_MONITOR > 0
-    #if defined(ARDUINO_CDC_ON_BOOT) && ARDUINO_USB_CDC_ON_BOOT
-      // If the board has native USB and it is configured to be active on boot, we can check if it is connected
-      uint32_t startTime = millis();
-      while (!Serial && ((millis() - startTime) < WAIT_FOR_MONITOR))
-      {
-        delay(10);
-      }
-      if (Serial) delay(WAIT_FOR_MONITOR);
-    #else
-      // For boards without native USB or where it is not active on boot, we can just delay for the specified time
-      delay(WAIT_FOR_MONITOR);
+  #ifdef WAIT_FOR_MONITOR
+    #if WAIT_FOR_MONITOR > 0
+      #if defined(ARDUINO_USB_CDC_ON_BOOT) && ARDUINO_USB_CDC_ON_BOOT
+        // If the board has native USB and it is configured to be active on boot, we can check if it is connected
+        uint32_t startTime = millis();
+        while (!Serial && ((millis() - startTime) < WAIT_FOR_MONITOR))
+        {
+          delay(10);
+        }
+        if (Serial) delay(WAIT_FOR_MONITOR);
+      #endif
     #endif
   #endif
-#endif
 }
 
 /**
