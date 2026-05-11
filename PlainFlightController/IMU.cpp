@@ -30,6 +30,7 @@
 void
 IMU::begin()
 {
+  delay(100); // Allow GPIO pins to settle after ESP32-S3 USB upload reset
   if (mpu6050.initialise() == false)
   {
     Serial.println("Failed to initialise MPU6050! Check your wiring.");
