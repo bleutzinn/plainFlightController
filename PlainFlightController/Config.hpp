@@ -40,7 +40,7 @@ class Config
     static constexpr BoardConfig::Board ESP32S3 = BoardConfig::XIAO;
 
     //Select the receiver protocol: CRSF or SBUS
-    static constexpr RxBase::ReceiverType RECEIVER_TYPE       = RxBase::ReceiverType::CRSF;
+    static constexpr RxBase::ReceiverType RECEIVER_TYPE       = RxBase::ReceiverType::FPORT;
 
     //Model type to instantiate, set one to true...
     static constexpr bool PLANE_FULL_HOUSE                    = true;
@@ -71,7 +71,6 @@ class Config
     static constexpr bool USE_LOW_VOLTS_CUT_OFF               = false;  //Set to true to actively limit throttle upon low battery voltage
     static constexpr bool USE_250_DEGS_SECOND                 = true;   //Set to false for 250 degs/s
     static constexpr bool USE_500_DEGS_SECOND                 = false;  //Set to false for 500 degs/s
-    static constexpr bool USE_EXTERNAL_LED                    = false;
     static constexpr bool USE_ACRO_TRAINER                    = false;  //When pitch & roll sticks centred levelled mode, else rate mode.
     static constexpr bool REVERSE_PITCH_CORRECTIONS           = false;  //Set REVERSE_x_CORRECTIONS to true to reverse gyro/levelling corrections
     static constexpr bool REVERSE_ROLL_CORRECTIONS            = false;
@@ -117,6 +116,17 @@ class Config
     static constexpr bool DEBUG_MOTOR_OUTPUT                  = false;
     static constexpr bool DEBUG_SERVO_OUTPUT                  = false;
 
+    //If using external LEDs set USE_EXTERNAL_LED to true.
+    static constexpr bool USE_EXTERNAL_LED                    = true;
+    
+    //In case of using a XIAO set BUILD_IN_LED_ON = false and BUILD_IN_LED_OFF = true as the
+    //on board LED of a XIAO is active low.
+    static constexpr bool BUILD_IN_LED_ON                     = false;
+    static constexpr bool BUILD_IN_LED_OFF                    = true;
+
+    static constexpr uint32_t LED_ON_DURATION_MS              = 200; //Duration of LED flash in milliseconds
+    static constexpr uint32_t LED_OFF_DURATION_MS             = 1000; //Duration of LED flash in milliseconds
+  
     //USB serial
     static constexpr uint32_t USB_BAUD                        = 500000U;
     static constexpr HardwareSerial* const RECEIVER_UART      = &Serial0;
