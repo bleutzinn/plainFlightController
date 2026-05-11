@@ -25,19 +25,14 @@
 
 
 /**
-* @brief    Initialises MPU6050 as used by the IMU class and checks it is communicating.
+* @brief    Initialises MPU6050 as used by the IMU class and reports its status.
 */ 
 void
 IMU::begin()
 {
-  mpu6050.initialise();
-
-  if (mpu6050.whoAmI() != Mpu6050::MPU6050_ADD)  
+  if (mpu6050.initialise() == false)
   {
-    Serial.println("I2C device not recognised!");
-    Serial.println("Try running the I2C WireScan example to find the device ID.");
-    Serial.println("Clone MPU6050's can also have ID's of 0x98, or 0x70, or 0x71.");   
-    Serial.println("Once you know the ID update MPU6050_ADD in IMU.hpp.");  
+    Serial.println("Failed to initialise MPU6050. Check your wiring.");
     m_imu.fault = true;
   }
   else
