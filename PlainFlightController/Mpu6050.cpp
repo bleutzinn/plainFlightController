@@ -42,12 +42,15 @@ Mpu6050::Mpu6050()
 
 /**
 * @brief    Initialises the MPU6050.
+* @return   True if initialisation was successful, false if it failed.
 */
-void
+bool
 Mpu6050::initialise()
 {
-  begin();
-  reset();
+  if (begin() == false) {
+    return false;
+  }
+
   delay(50);
 
   setConfig(CONFIG);
@@ -62,18 +65,31 @@ Mpu6050::initialise()
     setGyroConfig(GYRO_CONFIG_500);
   }
 
-  setAccelerometerConfig(ACCEL_CONFIG);  
+  setAccelerometerConfig(ACCEL_CONFIG);
+
+  return true;
 }
 
 
 /**
-* @brief    Sets up and start the SoftWire I2C transfer.
+* @brief    Sets up the I2C bus, checks for communication with the MPU6050.
+* @return   True if communication established, false if not.
 */
-void 
+bool
 Mpu6050::begin()
 {
-  i2c.begin(Config::ESP32S3.I2C_SDA,Config::ESP32S3.I2C_SCL,I2C_CLK_1MHZ);
-  i2c.begin();
+  i2c.begin(Config::ESP32S3.I2C_SDA, Config::ESP32S3.I2C_SCL, I2C_CLK_1MHZ);
+
+  const uint8_t result = i2c.beginTransmission(MPU6050_ADD);
+  i2c.endTransmission(true);
+
+  if (result != 0) // No ACK received at the MPU6050 I2C address
+  {
+    return false;
+  }
+
+  reset();
+  return true;
 }
 
 
