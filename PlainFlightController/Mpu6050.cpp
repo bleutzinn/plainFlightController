@@ -42,7 +42,7 @@ Mpu6050::Mpu6050()
 
 /**
 * @brief    Initialises the MPU6050.
-* @return   1 if initialisation was successful, 0 if it failed.
+* @return   True if initialisation was successful, false if it failed.
 */
 bool
 Mpu6050::initialise()
@@ -80,10 +80,8 @@ Mpu6050::begin()
 {
   i2c.begin(Config::ESP32S3.I2C_SDA, Config::ESP32S3.I2C_SCL, I2C_CLK_1MHZ);
 
-  const uint8_t result = i2c.beginTransmission(MPU6050_ADD);
-  i2c.endTransmission(true);
-
-  if (result != 0) // No ACK received at the MPU6050 I2C address
+  i2c.beginTransmission(MPU6050_ADD);
+  if (i2c.endTransmission() != 0)     // Receive 0 = success (ACK response) 
   {
     return false;
   }
